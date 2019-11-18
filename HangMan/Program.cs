@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Media;
 using static HangMan.GameLogic;
 using static HangMan.HangMan;
 
@@ -23,6 +24,9 @@ namespace HangMan
         {
             Player p1 = new Player();
             GameLogic game = new GameLogic();
+            SoundPlayer player = new SoundPlayer();
+            player.SoundLocation = AppDomain.CurrentDomain.BaseDirectory + "\\Chiptronical.wav";
+            player.PlayLooping();
 
             bool EndGame = false;
             while (!EndGame)
