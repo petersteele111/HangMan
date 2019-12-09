@@ -52,6 +52,7 @@ namespace HangMan
         /// <param name="_0">Ignored Parameter</param>
         static void StartGame(Player p1, GameLogic game)
         {
+            const int GUESSES_LEFT = 6;
             if (p1.GamesPlayed < 1)
             {
                 DisplayWelcomeScreen(p1);
@@ -68,7 +69,7 @@ namespace HangMan
             {
                 p1.CharsGuessed.Clear();
                 p1.UserWon = false;
-                p1.GuessesLeft = 6;
+                p1.GuessesLeft = GUESSES_LEFT;
             }
 
             game.HiddenWord = GetWord(game.RandomWords); // gets random word
@@ -126,6 +127,9 @@ namespace HangMan
             }
             else
             {
+                WriteScoreToFile(p1);
+                DisplayLeaderboard(p1);
+                DisplayContinuePrompt(2, 27);
                 return true;
             }
         }

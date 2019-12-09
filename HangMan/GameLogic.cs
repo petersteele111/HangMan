@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Text.RegularExpressions;
+using System.IO;
 
 namespace HangMan
 {
@@ -273,6 +274,7 @@ namespace HangMan
         /// </summary>
         public static void DisplayConsoleUI(Player p1, int WordLength = 0)
         {
+            Console.SetWindowSize(120,29);
             // Setup UI for application
             Console.Clear();
             Console.ForegroundColor = ConsoleColor.Cyan;
@@ -560,6 +562,47 @@ namespace HangMan
                                                                                        
                                                                                        
 ");
+        }
+
+        #endregion
+
+        #region Leaderboard
+
+        public static void DisplayLeaderboard(Player p1)
+        {
+            DisplayConsoleUI(p1);
+
+            Console.Write(@"
+                               _                    _           _                         _ 
+                              | |                  | |         | |                       | |
+                              | |     ___  __ _  __| | ___ _ __| |__   ___   __ _ _ __ __| |
+                              | |    / _ \/ _` |/ _` |/ _ \ '__| '_ \ / _ \ / _` | '__/ _` |
+                              | |___|  __/ (_| | (_| |  __/ |  | |_) | (_) | (_| | | | (_| |
+                              |______\___|\__,_|\__,_|\___|_|  |_.__/ \___/ \__,_|_|  \__,_|            
+");
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine("\t\t\t\t\tPlayer\t\tScore\t\tDate");
+            Console.WriteLine("\t\t\t\t\t------\t\t-----\t\t----");
+            string fileLocation = "Data\\Leaderboard.txt";
+            IEnumerable<string[]> leaderboard = File.ReadAllLines(fileLocation).Select(a => a.Split(','));
+            foreach (string[] leader in leaderboard)
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                string name = leader[0];
+                int.TryParse(leader[1], out int score);
+                DateTime.TryParse(leader[2], out DateTime date);
+                Console.WriteLine($"\t\t\t\t\t{name}\t\t{score}\t\t{date.ToString("d")}");
+            }
+        }
+
+        public static void WriteScoreToFile(Player p1)
+        {
+            if (File.Exists("Data\\Leaderboard.txt"))
+            {
+                string leaderboardText = p1.Name + "," + p1.Score + "," + DateTime.Today + Environment.NewLine;
+                File.AppendAllText("Data\\Leaderboard.txt", leaderboardText);
+            }
         }
 
         #endregion
