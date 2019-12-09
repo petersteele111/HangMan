@@ -13,7 +13,7 @@ namespace HangMan
          * Description: Play HangMan in in the console!
          * Author: Peter Steele
          * Date Created: 11/16/2019
-         * Last Modified: 11/18/2019
+         * Last Modified: 12/9/2019
          *********************************************************************/
 
         /// <summary>
